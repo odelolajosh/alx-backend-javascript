@@ -1,9 +1,18 @@
 export default function createIteratorObject(report) {
-  return (function* _() {
-    for (const department of Object.values(report.allEmployees)) {
-      for (const employee of department) {
-        yield employee;
-      }
-    }
-  }());
+  return {
+    [Symbol.iterator]() {
+      let counter = 0;
+      return {
+        next() {
+          const employees = Object.values(report.allEmployees).flat();
+          if (counter < employees.length) {
+            const value = employees[counter];
+            counter += 1;
+            return { value, done: false };
+          }
+          return { done: true, value: undefined };
+        },
+      };
+    },
+  };
 }
