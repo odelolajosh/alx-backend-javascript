@@ -6,9 +6,9 @@ export default function cleanSet(set = new Set(), startString = '') {
   set.forEach((value) => {
     if (typeof value === 'string' && value.startsWith(startString)) {
       const valueSubString = value.slice(startString.length);
-			if (valueSubString && valueSubString !== value) {
-				cleanArr.push(valueSubString);
-			}
+      if (valueSubString && valueSubString !== value) {
+        cleanArr.push(valueSubString);
+      }
     }
   });
   return cleanArr.join('-');
