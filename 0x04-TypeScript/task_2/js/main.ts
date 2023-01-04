@@ -42,6 +42,24 @@ export function createEmployee(salary: number | string): Teacher | Director {
   }
 }
 
+export function isDirector(employee: Teacher | Director): employee is Director {
+  return employee instanceof Director;
+}
+
+export function executeWork(employee: Teacher | Director): string {
+  if (isDirector(employee)) {
+    return employee.workDirectorTasks();
+  } else {
+    return employee.workTeacherTasks();
+  }
+}
+
+type Subjects = "Math" | "History";
+
+export function teachClass(todayClass: Subjects): string {
+  return `Teaching ${todayClass}`;
+}
+
 console.log(createEmployee(200));
 console.log(createEmployee(1000));
 console.log(createEmployee('$500'));
