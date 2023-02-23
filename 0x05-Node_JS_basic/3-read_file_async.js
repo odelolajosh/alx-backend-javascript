@@ -27,9 +27,6 @@ const countStudents = (path) => new Promise((resolve, reject) => {
     const map = {};
     for (const row of rows.slice(1)) {
       const splitRow = row.split(',');
-      if (splitRow.length === 0) {
-        continue;
-      }
       if (splitRow.length && (splitRow.length >= fieldPos + 1 && splitRow.length >= fNamePos + 1)) {
         const field = splitRow[fieldPos];
         const firstName = splitRow[fNamePos];
