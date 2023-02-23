@@ -20,24 +20,20 @@ function countStudents(path) {
 
   const STUDENT_COUNT = Symbol('Student count');
 
-  const fieldMap = rows.slice(1).reduce((map, row) => {
+  const map = {};
+  for (const row of rows.slice(1)) {
     const splitRow = row.split(',');
-    if (splitRow.length === 0) {
-      return map;
-    }
-    if (splitRow.length >= fieldPos + 1 && splitRow.length >= fNamePos + 1) {
+    if (splitRow.length && (splitRow.length >= fieldPos + 1 && splitRow.length >= fNamePos + 1)) {
       const field = splitRow[fieldPos];
       const firstName = splitRow[fNamePos];
       map[field] = map[field] || [];
       map[field].push(firstName);
       map[STUDENT_COUNT] = (map[STUDENT_COUNT] || 0) + 1;
     }
+  }
 
-    return map;
-  }, {});
-
-  console.log(`Number of students: ${fieldMap[STUDENT_COUNT]}`);
-  Object.entries(fieldMap).forEach(([field, names]) => {
+  console.log(`Number of students: ${map[STUDENT_COUNT]}`);
+  Object.entries(map).forEach(([field, names]) => {
     console.log(`Number of students in ${field}: ${names.length}. List: ${names.join(', ')}`);
   });
 }
