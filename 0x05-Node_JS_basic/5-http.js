@@ -3,7 +3,7 @@ const fs = require('fs');
 
 const PORT = 1245;
 const HOST = 'localhost';
-const DATABASE_URI = process.argv[2];
+const DATABASE_URI = process.argv.length > 2 ? process.argv[2] : '';
 const server = http.createServer();
 
 const countStudents = (path) => new Promise((resolve, reject) => {
