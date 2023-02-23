@@ -5,17 +5,17 @@ const fs = require('fs');
  * @param {string} path
  * @return {Promise<number>}
  */
-async function countStudents(path) {
+const countStudents = (path) => new Promise((resolve, reject) => {
   if (!fs.existsSync(path)) {
-    throw new Error('Cannot load the database');
+    reject(new Error('Cannot load the database'));
   }
   if (!fs.statSync(path).isFile()) {
-    throw new Error('Cannot load the database');
+    reject(new Error('Cannot load the database'));
   }
   const options = { encoding: 'utf-8' };
   fs.readFile(path, options, (err, data) => {
     if (err) {
-      throw new Error('Cannot load the database');
+      reject(new Error('Cannot load the database'));
     }
     const rows = data.trim().split('\n');
     const fields = rows[0].split(',');
@@ -43,7 +43,8 @@ async function countStudents(path) {
     Object.entries(map).forEach(([field, names]) => {
       console.log(`Number of students in ${field}: ${names.length}. List: ${names.join(', ')}`);
     });
+    resolve();
   });
-}
+});
 
 module.exports = countStudents;
