@@ -64,7 +64,7 @@ const routes = {
       res.statusCode = 200;
       res.write(Buffer.from(text));
     }).catch((err) => {
-      text = err instanceof Error ? err.message : err.toString();
+      text += err instanceof Error ? err.message : err.toString();
       res.setHeader('Content-Type', 'text/plain');
       res.setHeader('Content-Length', text.length);
       res.statusCode = 500;
