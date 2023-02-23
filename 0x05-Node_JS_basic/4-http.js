@@ -1,13 +1,22 @@
 const http = require('http');
 
-const server = http.createServer((_req, res) => {
+/**
+ * Create a small HTTP server using Node's HTTP module
+ */
+
+const PORT = 1245;
+const HOST = 'localhost';
+const server = http.createServer();
+
+server.on('request', (_req, res) => {
+  const text = 'Hello Holberton School!';
+
   res.setHeader('Content-Type', 'text/plain');
-  res.setHeader('Content-Length', responseText.length);
+  res.setHeader('Content-Length', text.length);
   res.statusCode = 200;
-  res.write('Hello to Holberton School!');
-  res.end();
+  res.write(Buffer.from(text));
 });
 
-server.listen(1245, 'localhost');
+server.listen(PORT, HOST);
 
 module.exports = server;
