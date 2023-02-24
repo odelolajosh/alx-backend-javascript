@@ -1,4 +1,4 @@
-import readDatabase, { STUDENT_COUNT } from '../utils'
+import readDatabase, { STUDENT_COUNT } from '../utils';
 
 /** Supported majors */
 const SUPPORTED_MAJORS = ['CS', 'SWE'];
@@ -18,7 +18,7 @@ export default class StudentController {
       )).join('\n');
       return res.status(200).send(text);
     }).catch((err) => {
-      let text = err instanceof Error ? err.message : err.toString();
+      const text = err instanceof Error ? err.message : err.toString();
       return res.status(500).send(text);
     });
   }

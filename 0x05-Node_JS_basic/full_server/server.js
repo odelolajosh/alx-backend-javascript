@@ -12,7 +12,7 @@ const app = express();
 app.use('/', router);
 
 app.listen(PORT, HOST, () => {
-	console.log(`Server listening on http://${HOST}:${PORT}`);
+  console.log(`Server listening on http://${HOST}:${PORT}`);
 });
 
 module.exports = app;
