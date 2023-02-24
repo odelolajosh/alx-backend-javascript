@@ -1,7 +1,7 @@
 const { expect } = require('chai');
 const request = require('request');
 
-const BASE_URL = 'https://localhost:7865';
+const BASE_URL = 'http://localhost:7865';
 
 describe('Payment API', function() {
   it('GET /', function(done) {
