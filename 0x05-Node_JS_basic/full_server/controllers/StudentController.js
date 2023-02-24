@@ -1,39 +1,43 @@
-import readDatabase from '../utils'
+import readDatabase, { STUDENT_COUNT } from '../utils'
 
+/** Supported majors */
+const SUPPORTED_MAJORS = ['CS', 'SWE'];
 
 /**
  * Student Controller
  */
 export default class StudentController {
+  /** Returns a report of all students */
   static getAllStudents(_req, res) {
     const DATABASE = process.argv.length > 2 ? process.argv[2] : '';
     readDatabase(DATABASE).then((result) => {
-      let text = 'This is the list of our students';
-      text += `Number of students: ${result[STUDENT_COUNT]}`;
-      Object.entries(result).forEach(([field, names]) => {
-        text += `Number of students in ${field}: ${names.length}. List: ${names.join(', ')}`
-      });
-      res.status(200).send(text);
+      let text = 'This is the list of our students\n';
+      text += `Number of students: ${result[STUDENT_COUNT]}\n`;
+      text += Object.entries(result).map(([field, names]) => (
+        `Number of students in ${field}: ${names.length}. List: ${names.join(', ')}`
+      )).join('\n');
+      return res.status(200).send(text);
     }).catch((err) => {
-      text = err instanceof Error ? err.message : err.toString();
+      let text = err instanceof Error ? err.message : err.toString();
       return res.status(500).send(text);
     });
   }
 
+  /** Returns a report of all students by major */
   static getAllStudentsByMajor(req, res) {
     const { major } = req.params;
     const DATABASE = process.argv.length > 2 ? process.argv[2] : '';
 
-    if (major !== 'CS' || major !== 'SWE') {
+    if (!SUPPORTED_MAJORS.includes(major)) {
       return res.status(500).send('Major parameter must be CS or SWE');
     }
 
     readDatabase(DATABASE).then((result) => {
-      field = result[major];
-      text = `List: ${names.join(', ')}`;
+      const names = result[major];
+      const text = `List: ${names.join(', ')}`;
       return res.status(200).send(text);
     }).catch((err) => {
-      text = err instanceof Error ? err.message : err.toString();
+      const text = err instanceof Error ? err.message : err.toString();
       return res.status(500).send(text);
     });
   }

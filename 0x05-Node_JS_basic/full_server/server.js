@@ -9,7 +9,7 @@ const PORT = 1245;
 const HOST = 'localhost';
 const app = express();
 
-app.use(router);
+app.use('/', router);
 
 app.listen(PORT, HOST, () => {
 	console.log(`Server listening on http://${HOST}:${PORT}`);
