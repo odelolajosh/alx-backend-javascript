@@ -12,14 +12,14 @@ export default class StudentController {
     const DATABASE = process.argv.length > 2 ? process.argv[2] : '';
     readDatabase(DATABASE).then((result) => {
       let text = 'This is the list of our students\n';
-      text += `Number of students: ${result[STUDENT_COUNT]}\n`;
+      // text += `Number of students: ${result[STUDENT_COUNT]}\n`;
       text += Object.entries(result).map(([field, names]) => (
         `Number of students in ${field}: ${names.length}. List: ${names.join(', ')}`
       )).join('\n');
-      return res.status(200).send(text);
+      res.status(200).send(text);
     }).catch((err) => {
       const text = err instanceof Error ? err.message : err.toString();
-      return res.status(500).send(text);
+      res.status(500).send(text);
     });
   }
 
@@ -29,16 +29,17 @@ export default class StudentController {
     const DATABASE = process.argv.length > 2 ? process.argv[2] : '';
 
     if (!SUPPORTED_MAJORS.includes(major)) {
-      return res.status(500).send('Major parameter must be CS or SWE');
+      res.status(500).send('Major parameter must be CS or SWE');
+      return;
     }
 
     readDatabase(DATABASE).then((result) => {
       const names = result[major];
       const text = `List: ${names.join(', ')}`;
-      return res.status(200).send(text);
+      res.status(200).send(text);
     }).catch((err) => {
       const text = err instanceof Error ? err.message : err.toString();
-      return res.status(500).send(text);
+      res.status(500).send(text);
     });
   }
 }
